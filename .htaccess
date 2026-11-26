@@ -1,24 +1,19 @@
 DirectorySlash Off
 
-RewriteEngine On
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-# 1. Redirect semua trailing slash menjadi tanpa slash
-# Kecuali homepage
-RewriteCond %{REQUEST_URI} !^/$
-RewriteCond %{REQUEST_URI} ^(.+)/$
-RewriteRule ^(.+)/$ /$1 [R=302,L,NE]
+    # Hapus trailing slash, kecuali homepage
+    RewriteCond %{REQUEST_URI} !^/$
+    RewriteCond %{REQUEST_URI} /$
+    RewriteRule ^(.+)/$ /$1 [R=302,L,NE]
 
-# 2. Sembunyikan index.html dari URL
-RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[?\s] [NC]
-RewriteRule ^(.*/)?index\.html$ /%1 [R=302,L,NE]
+    # Sajikan index.html dari folder secara internal
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_FILENAME}/index.html -f
+    RewriteRule ^(.+?)/?$ $1/index.html [END]
 
-# 3. Jika URL merupakan folder dengan index.html
-# Tampilkan index.html tanpa mengubah URL browser
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteRule ^(.+)$ $1/index.html [L]
-
-# 4. Jika file asli tersedia, jangan rewrite
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
-
+    # File asli
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [END]
+</IfModule>
