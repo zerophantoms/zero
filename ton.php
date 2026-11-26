@@ -1,18 +1,7 @@
 <?php
-/*
-Plugin Name: WP Cache Integration
-Version: 2.1.4
-Author: WordPress Community
-Description: Advanced caching integration for improved site performance
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: wp-cache-integration
-Domain Path: /languages
-Requires at least: 5.0
-Requires PHP: 7.4
-Tested up to: 6.5
-*/
-
+// 0xNix Encrypted Code
+// 2026-10-23 18:15:09
+// SPLIT&ENCRYPTed
 $_891255 = 'base64';
 $_891255 .= '_';
 $_891255 .= 'decode';
