@@ -2,12 +2,28 @@ DirectorySlash Off
 
 RewriteEngine On
 
-# Hapus slash di belakang semua URL, kecuali homepage
+# ------------------------------------------
+# Redirect trailing slash -> tanpa slash
+# ------------------------------------------
 RewriteCond %{REQUEST_URI} !^/$
 RewriteCond %{REQUEST_URI} /$
-RewriteRule ^(.+)/$ /$1 [R=302,L,NE]
+RewriteRule ^(.+)/$ /$1 [R=301,L]
 
-# Routing index.php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
+# ------------------------------------------
+# Redirect /contact/index.html -> /contact
+# ------------------------------------------
+RewriteCond %{REQUEST_URI} ^(.+)/index\.html$
+RewriteRule ^(.+)/index\.html$ /$1 [R=301,L]
+
+# ------------------------------------------
+# /folder -> /folder/index.html
+# tanpa mengubah URL browser
+# ------------------------------------------
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.+)$ /$1/index.html [L]
+
+# ------------------------------------------
+# File asli
+# ------------------------------------------
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
